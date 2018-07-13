@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
+    <Button
+        android:id="@+id/btnTri"
+        android:layout_width="80dp"
+        android:text="btnTri"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btnTriWithCamera"
+        android:layout_width="80dp"
+        android:text="btnTriWithCamera"
+        android:layout_height="wrap_content" />
     <com.example.demo.openglapplication.render.FGLView
         android:id="@+id/mGLView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-</RelativeLayout>
+</LinearLayout>

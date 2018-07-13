@@ -8,10 +8,16 @@ class FGLView(context:Context,attrs:AttributeSet?=null) :GLSurfaceView(context,a
 
     private var renderer: FGLRender
 
+
     init {
         setEGLContextClientVersion(2)
         renderer=FGLRender(this)
         setRenderer(renderer)
         renderMode=GLSurfaceView.RENDERMODE_WHEN_DIRTY
     }
+
+//    fun setShape(string:String){
+//        renderer.setShape(string)
+//    }
+
 }
