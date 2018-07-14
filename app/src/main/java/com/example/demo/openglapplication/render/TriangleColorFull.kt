@@ -76,8 +76,15 @@ class TriangleColorFull(view:View):Shape(view){
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         var ratio=width.toFloat()/height
-        Matrix.frustumM(mProjectMatrix,0,-ratio,ratio,-1.0f,1.0f,3.0f,7.0f)
-        Matrix.setLookAtM(mViewMatrix,0,0.0f,0.0f,7.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f)
+        Matrix.frustumM(mProjectMatrix
+                ,0,
+                -ratio,ratio,-1.0f,1.0f,
+                3.0f,7.0f)
+        Matrix.setLookAtM(mViewMatrix,
+                0,
+                0.0f,0.0f,7f,  //相机位置
+                0.0f,0f,-2.0f, //相机镜头的朝向
+                0.0f,1.0f,0.0f)  //相机正上方的位置
         Matrix.multiplyMM(mMVPMatrix,0,mProjectMatrix,0,mViewMatrix,0)
     }
 
@@ -85,23 +92,26 @@ class TriangleColorFull(view:View):Shape(view){
     }
 
     companion object {
-        val triangleCoords= floatArrayOf(
+        private val triangleCoords= floatArrayOf(
                 0.5f,0.5f,0.0f,
                 -0.5f,-0.5f,0.0f,
                 0.5f,-0.5f,0.0f
         )
 
-        val color= floatArrayOf(
+        private val color= floatArrayOf(
                 0.0f,1.0f,0.0f,1.0f,
                 1.0f,0.0f,0.0f,1.0f,
                 0.0f,0.0f,1.0f,1.0f
         )
 
-        const val COORDS_PER_VERTEX=3
-        val vertexShaderCode=
+        private const val COORDS_PER_VERTEX=3
+        private val vertexShaderCode=
                 """
+//                    attribute 一般用于每个顶点都不相同的量
                    attribute vec4 vPosition;
+//                   uniform一般用于同一组顶点组成的3D物体中各个顶点都相同的量
                     uniform mat4 vMatrix;
+//                    varing一般用于从顶点着色器传入片元着色器的量
                     varying vec4 vColor;
                     attribute vec4 aColor;
                     void main(){
@@ -109,7 +119,7 @@ class TriangleColorFull(view:View):Shape(view){
                       vColor=aColor;
                     }
                 """
-        val fragmentShaderCode=
+        private val fragmentShaderCode=
                 """
                     precision mediump float;
                     varying vec4 vColor;
@@ -117,8 +127,8 @@ class TriangleColorFull(view:View):Shape(view){
                       gl_FragColor=vColor;
                     }
                 """
-        val vertexCount= triangleCoords.size/ COORDS_PER_VERTEX
-        val vertexStride= COORDS_PER_VERTEX*4
+        private val vertexCount= triangleCoords.size/ COORDS_PER_VERTEX
+        private val vertexStride= COORDS_PER_VERTEX*4
     }
 
 }
