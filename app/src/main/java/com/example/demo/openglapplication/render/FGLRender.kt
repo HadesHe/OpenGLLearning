@@ -21,7 +21,7 @@ class FGLRender(val view:View):Shape(view) {
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         GLES20.glClearColor(0.5f,0.5f,0.5f,0.5f)
 
-        shape=TriangleColorFull(view)
+        shape=Square(view)
         shape.onSurfaceCreated(gl,config)
 
     }
