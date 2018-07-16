@@ -97,7 +97,7 @@ class Oval(view:View,val height:Float=0.0f) :Shape(view){
 
     private val mViewMatrix=FloatArray(16)
 
-    val mMVPMatrix=FloatArray(16)
+    var mMVPMatrix=FloatArray(16)
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         var ratio=width.toFloat()/height
