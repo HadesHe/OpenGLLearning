@@ -14,6 +14,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnFGLView->{
                 startActivity(Intent(this@MainActivity, FGLViewActivity::class.java))
             }
+            R.id.btnVary -> {
+                startActivity(Intent(this@MainActivity,VaryActivity::class.java))
+            }
         }
     }
 
