@@ -17,6 +17,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnVary -> {
                 startActivity(Intent(this@MainActivity,VaryActivity::class.java))
             }
+
+            R.id.btnSGL->{
+                startActivity(Intent(this@MainActivity,SGLViewActivity::class.java))
+            }
         }
     }
 
