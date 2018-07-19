@@ -1,10 +1,12 @@
 package com.example.demo.openglapplication
 
 import android.content.Intent
+import android.graphics.Camera
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import com.example.demo.openglapplication.camera.CameraActivity
 import com.example.demo.openglapplication.render.FGLViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,6 +23,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnSGL->{
                 startActivity(Intent(this@MainActivity,SGLViewActivity::class.java))
             }
+            R.id.btnCamera -> {
+                startActivity(Intent(this@MainActivity, CameraActivity::class.java))
+            }
         }
     }
 
@@ -32,6 +37,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnFGLView.setOnClickListener(this)
         btnVary.setOnClickListener(this)
         btnSGL.setOnClickListener(this)
+        btnCamera.setOnClickListener(this)
 
     }
 }
