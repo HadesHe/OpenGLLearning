@@ -10,7 +10,9 @@ import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-
+/**
+ * 圆锥
+ */
 
 class Cone(view:View):Shape(view){
 

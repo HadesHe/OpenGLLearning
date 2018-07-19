@@ -10,6 +10,9 @@ import java.nio.ShortBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
+/**
+ * 正方形
+ */
 class Square(view:View):Shape(view){
 
     private var vertexBuffer: FloatBuffer

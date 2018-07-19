@@ -4,6 +4,9 @@ import android.view.View
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
+/**
+ * 球体
+ */
 class Ball(view:View):Shape(view){
     override fun onDrawFrame(gl: GL10?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

@@ -9,6 +9,10 @@ import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
+/**
+ * 正三角形
+ */
+
 class TriangleWithCamera(view: View) : Shape(view) {
 
     private var vertexBuffer: FloatBuffer

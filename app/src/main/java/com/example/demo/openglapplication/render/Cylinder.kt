@@ -10,7 +10,9 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-
+/**
+ * 圆柱
+ */
 class Cylinder(val view:View):Shape(view) {
 
     private var ovalBottom: Oval

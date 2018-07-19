@@ -8,6 +8,9 @@ import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
+/**
+ * 绘制三角形
+ */
 class Triangle(mView: View) : Shape(mView) {
 
     private var vertexBuffer: FloatBuffer
