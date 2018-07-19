@@ -1,6 +1,7 @@
 package com.example.demo.openglapplication.image
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.opengl.GLSurfaceView
 import android.view.View
 import com.example.demo.openglapplication.filter.AFilter
@@ -9,8 +10,14 @@ import com.example.demo.openglapplication.filter.ContrastColorFilter
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-class SGLRender(view: View) : GLSurfaceView.Renderer {
-    lateinit var image: Bitmap
+class SGLRender(val view: View) : GLSurfaceView.Renderer {
+    var image: Bitmap=BitmapFactory.decodeStream(view.getResources().getAssets().open("texture/fengj.png"))
+        set(value) {
+        field=value
+        mFilter.mBitmap=value
+    }
+
+
     private var refreshFlag=false
 
     var mFilter: AFilter
@@ -32,8 +39,12 @@ class SGLRender(view: View) : GLSurfaceView.Renderer {
             refreshFlag=true
             mFilter=filter
             if (image != null) {
-                mFilter.setBitmap(image)
+                mFilter.mBitmap=image
             }
+    }
+
+    fun refresh(){
+        refreshFlag=true
     }
 
     fun getFilter(): AFilter {
@@ -42,11 +53,17 @@ class SGLRender(view: View) : GLSurfaceView.Renderer {
 
     fun setImageBuffer(buffer:IntArray,width: Int,height: Int){
         image= Bitmap.createBitmap(buffer,width,height,Bitmap.Config.RGB_565)
-        mFilter.bitmap=image
+        mFilter.mBitmap=image
     }
 
     override fun onDrawFrame(gl: GL10?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        if(refreshFlag&&width != 0&& height != 0){
+            mFilter.onSurfaceCreated(gl,config)
+            mFilter.onSurfaceChanged(gl,width,height)
+            refreshFlag=false
+        }
+        mFilter.onDrawFrame(gl)
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {

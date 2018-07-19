@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
         btnFGLView.setOnClickListener(this)
+        btnVary.setOnClickListener(this)
+        btnSGL.setOnClickListener(this)
 
     }
 }

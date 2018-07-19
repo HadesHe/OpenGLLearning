@@ -8,7 +8,7 @@ import com.example.demo.openglapplication.filter.AFilter
 
 class SGLView(context: Context,attributeSet: AttributeSet?=null):GLSurfaceView(context,attributeSet){
 
-    private val render: SGLRender
+    val render: SGLRender
 
     init {
         setEGLContextClientVersion(2)
@@ -21,7 +21,7 @@ class SGLView(context: Context,attributeSet: AttributeSet?=null):GLSurfaceView(c
     }
 
     fun setFilter(filter:AFilter){
-        render.filter=filter
+        render.setFilter(filter)
     }
 
 

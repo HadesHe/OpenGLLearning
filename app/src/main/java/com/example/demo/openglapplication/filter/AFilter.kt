@@ -19,7 +19,7 @@ abstract class AFilter(val context: Context,val vertext:String,val fragment:Stri
 
     private var bCoord: FloatBuffer
 
-    private lateinit var mBitmap:Bitmap
+    lateinit var mBitmap:Bitmap
 
     init {
         val bb=ByteBuffer.allocateDirect(sPos.size*4)
@@ -106,7 +106,7 @@ abstract class AFilter(val context: Context,val vertext:String,val fragment:Stri
         Matrix.multiplyMM(mMVPMatrix,0,mProjectMatrix,0,mViewMatrix,0)
     }
 
-    private val isHalf=false
+    var isHalf=false
 
     private var textureId=0
 
