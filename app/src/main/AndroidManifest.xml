@@ -22,6 +22,7 @@
 
         <activity android:name=".render.ChooseActivity"/>
         <activity android:name=".SGLViewActivity"/>
+        <activity android:name=".VaryActivity"/>
     </application>
 
 </manifest>
