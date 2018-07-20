@@ -7,33 +7,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.demo.openglapplication.R
+import kotlinx.android.synthetic.main.activity_camera.*
 
 class CameraActivity:AppCompatActivity() {
 
-    private val initViewRunnable= object:Runnable{
-        override fun run() {
-            setContentView(R.layout.activity_camera)
-        }
-
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        PermissionEx.askPermission(this@CameraActivity, arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE),10,initViewRunnable)
+        setContentView(R.layout.activity_camera)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        PermissionEx.onRequestPermissionsResult(requestCode==10,grantResults,initViewRunnable,
-                object:Runnable{
-                    override fun run() {
-                        Toast.makeText(this@CameraActivity,"没有权限",Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
-
-                })
-    }
 
     override fun onResume() {
         super.onResume()

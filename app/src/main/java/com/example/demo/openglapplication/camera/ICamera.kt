@@ -23,7 +23,7 @@ interface ICamera {
 
     fun getPictureSize():Point
 
-    fun setPreviewTexture(callback:PreviewFrameCallback)
+    fun setOnPreviewFrameCallback(callback:PreviewFrameCallback)
 
     data class Config(val rate:Float,val minPreviewWidth:Int,val minPictureWidth:Int)
 

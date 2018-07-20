@@ -3,10 +3,16 @@ package com.example.demo.openglapplication.camera
 import android.graphics.Point
 import android.graphics.SurfaceTexture
 import android.hardware.Camera
+import android.util.Log
+import java.util.*
+
+
 
 class KitkatCamera:ICamera {
 
+
     private var mConfig: ICamera.Config
+
 
     private var sizeComparator: CameraSizeComparator
 
@@ -17,45 +23,145 @@ class KitkatCamera:ICamera {
 
     private lateinit var mCamera: Camera
 
+    private lateinit var mPicSize: Point
+
+    private lateinit var mPreSize: Point
+
+    private lateinit var picSize: Camera.Size
+
+    private lateinit var preSize: Camera.Size
+
     override fun open(cameraId: Int): Boolean {
         mCamera=Camera.open(cameraId)
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if(mCamera != null) {
+            val param = mCamera.parameters
+            picSize = getPropPictureSize(param.supportedPictureSizes, mConfig.rate,
+                    mConfig.minPictureWidth)
+            preSize = getPropPreviewSize(param.supportedPreviewSizes, mConfig.rate, mConfig
+                    .minPreviewWidth)
+            param.setPictureSize(picSize.width, picSize.height)
+            param.setPreviewSize(preSize.width, preSize.height)
+            mCamera.parameters = param
+            val pre = param.previewSize
+            val pic = param.pictureSize
+            mPicSize = Point(pic.height, pic.width)
+            mPreSize = Point(pre.height, pre.width)
+            Log.e("wuwang", "camera previewSize:" + mPreSize.x + "/" + mPreSize.y)
+            return true
+        }
+        return false
     }
+
 
     override fun setConfig(config: ICamera.Config) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.mConfig=config
     }
 
+
+
     override fun preview(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (mCamera != null) {
+            mCamera.startPreview()
+        }
+
+        return false
     }
 
     override fun switchTo(cameraId: Int): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        close()
+        open(cameraId)
+        return false
     }
 
     override fun takePhoto(callback: ICamera.TakePhotoCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun close(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mCamera.stopPreview()
+        mCamera.release()
+        return false
     }
 
     override fun setPreviewTexture(texture: SurfaceTexture) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if(mCamera != null){
+            mCamera.setPreviewTexture(texture)
+        }
     }
 
     override fun getPreviewSize(): Point {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return mPreSize
     }
 
     override fun getPictureSize(): Point {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return mPicSize
     }
 
-    override fun setPreviewTexture(callback: ICamera.PreviewFrameCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setOnPreviewFrameCallback(callback: ICamera.PreviewFrameCallback) {
+        if(mCamera!= null){
+            mCamera.setPreviewCallback(object:Camera.PreviewCallback{
+                override fun onPreviewFrame(data: ByteArray, camera: Camera?) {
+                    callback.onPreviewFrame(data,mPreSize.x,mPreSize.y)
+                }
+            })
+        }
+    }
+
+    fun  addBuffer(buffer:ByteArray){
+        if(mCamera!=null){
+            mCamera.addCallbackBuffer(buffer)
+        }
+    }
+
+    fun setOnPreviewFrameCallbackWithBuffer(callback:ICamera.PreviewFrameCallback){
+        if(mCamera!=null){
+            mCamera.setPreviewCallbackWithBuffer(object:Camera.PreviewCallback{
+                override fun onPreviewFrame(data: ByteArray, camera: Camera?) {
+                    callback.onPreviewFrame(data,mPreSize.x,mPreSize.y)
+                }
+
+            })
+        }
+    }
+
+    private fun getPropPreviewSize(list: List<Camera.Size>, th: Float, minWidth: Int): Camera.Size {
+        Collections.sort(list, sizeComparator)
+
+        var i = 0
+        for (s in list) {
+            if (s.height >= minWidth && equalRate(s, th)) {
+                break
+            }
+            i++
+        }
+        if (i == list.size) {
+            i = 0
+        }
+        return list[i]
+    }
+
+    private fun getPropPictureSize(list: List<Camera.Size>, th: Float, minWidth: Int): Camera.Size {
+        Collections.sort(list, sizeComparator)
+
+        var i = 0
+        for (s in list) {
+            if (s.height >= minWidth && equalRate(s, th)) {
+                break
+            }
+            i++
+        }
+        if (i == list.size) {
+            i = 0
+        }
+        return list[i]
+    }
+
+    private fun equalRate(s: Camera.Size, rate: Float): Boolean {
+        val r = s.width.toFloat() / s.height.toFloat()
+        return if (Math.abs(r - rate) <= 0.03) {
+            true
+        } else {
+            false
+        }
     }
 
     private class CameraSizeComparator :Comparator<Camera.Size>{

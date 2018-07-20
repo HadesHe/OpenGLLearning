@@ -12,6 +12,13 @@ class CameraView(context: Context,attrs:AttributeSet?=null): GLSurfaceView(conte
 
     private var mCamera2: KitkatCamera
 
+    private var cameraId=1
+
+
+    private  var mRunnable: Runnable?=null
+
+    private var mCameraDrawer: CameraDrawer
+
     init {
         setEGLContextClientVersion(2)
         setRenderer(this)
@@ -21,17 +28,15 @@ class CameraView(context: Context,attrs:AttributeSet?=null): GLSurfaceView(conte
         mCameraDrawer=CameraDrawer(resources)
     }
 
-
-    private var cameraId=1
-
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         mCameraDrawer.onSurfaceCreated(gl,config)
         if(mRunnable!=null){
-            mRunnable.run()
+            mRunnable?.run()
             mRunnable=null
         }
 
         mCamera2.open(cameraId)
+        mCameraDrawer.setCameraId(cameraId)
         val point=mCamera2.getPreviewSize()
         mCameraDrawer.setDataSize(point.x,point.y)
         mCameraDrawer.getSurfaceTexture().setOnFrameAvailableListener(object : SurfaceTexture.OnFrameAvailableListener {
@@ -49,8 +54,6 @@ class CameraView(context: Context,attrs:AttributeSet?=null): GLSurfaceView(conte
                 cameraId=if(cameraId==1)0 else 1
             }
 
-
-
         }
         onPause()
         onResume()
@@ -62,7 +65,7 @@ class CameraView(context: Context,attrs:AttributeSet?=null): GLSurfaceView(conte
     }
 
     override fun onDrawFrame(gl: GL10?) {
-        mCameraDrawer.onDrawerFrame(gl)
+        mCameraDrawer.onDrawFrame(gl)
     }
 
     override fun onPause() {
