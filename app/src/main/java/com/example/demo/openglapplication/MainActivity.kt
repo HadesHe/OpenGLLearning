@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import com.example.demo.openglapplication.camera.CameraActivity
+import com.example.demo.openglapplication.etc.ZipActivity
 import com.example.demo.openglapplication.render.FGLViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,6 +27,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnCamera -> {
                 startActivity(Intent(this@MainActivity, CameraActivity::class.java))
             }
+            R.id.btnZip ->{
+                startActivity(Intent(this@MainActivity, ZipActivity::class.java))
+            }
         }
     }
 
@@ -38,6 +42,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnVary.setOnClickListener(this)
         btnSGL.setOnClickListener(this)
         btnCamera.setOnClickListener(this)
+        btnZip.setOnClickListener(this)
 
     }
 }
