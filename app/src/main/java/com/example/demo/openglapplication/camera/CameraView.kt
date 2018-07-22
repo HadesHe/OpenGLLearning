@@ -30,15 +30,16 @@ class CameraView(context: Context,attrs:AttributeSet?=null): GLSurfaceView(conte
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         mCameraDrawer.onSurfaceCreated(gl,config)
-        if(mRunnable!=null){
-            mRunnable?.run()
-            mRunnable=null
+        if (mRunnable != null) {
+            mRunnable!!.run()
+            mRunnable = null
         }
 
         mCamera2.open(cameraId)
         mCameraDrawer.setCameraId(cameraId)
         val point=mCamera2.getPreviewSize()
         mCameraDrawer.setDataSize(point.x,point.y)
+        mCamera2.setPreviewTexture(mCameraDrawer.getSurfaceTexture())
         mCameraDrawer.getSurfaceTexture().setOnFrameAvailableListener(object : SurfaceTexture.OnFrameAvailableListener {
             override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) {
                 requestRender()
@@ -71,6 +72,13 @@ class CameraView(context: Context,attrs:AttributeSet?=null): GLSurfaceView(conte
     override fun onPause() {
         super.onPause()
         mCamera2.close()
+    }
+
+    private var lastChange: Boolean = false
+
+    fun changeMatrix() {
+        mCameraDrawer.calculateMatrix(lastChange)
+        lastChange=lastChange.not()
     }
 
 }

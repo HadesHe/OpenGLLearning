@@ -5,6 +5,7 @@ import android.graphics.SurfaceTexture
 import android.opengl.GLES11Ext
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
+import android.opengl.Matrix
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -39,7 +40,11 @@ class CameraDrawer(resources: Resources):GLSurfaceView.Renderer {
         calculateMatrix()
     }
 
-    fun calculateMatrix(){
+
+
+
+
+    fun calculateMatrix(changeMatrix:Boolean=false){
         Gl2Utils.getShowMatrix(matrix,this.dataWidth,this.dataHeight,this.width,this.height)
         if(cameraId==1){
             Gl2Utils.flip(matrix,true,false)
@@ -48,8 +53,14 @@ class CameraDrawer(resources: Resources):GLSurfaceView.Renderer {
         }else{
             Gl2Utils.rotate(matrix,270.0f)
         }
+
+        if(changeMatrix){
+            Matrix.scaleM(matrix,0,0.5f,0.5f,1.0f)
+        }
         mOesFilter.matrix=matrix
     }
+
+
 
     private lateinit var surfaceTexture: SurfaceTexture
 

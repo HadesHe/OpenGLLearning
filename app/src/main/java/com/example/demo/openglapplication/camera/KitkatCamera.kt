@@ -77,8 +77,10 @@ class KitkatCamera:ICamera {
     }
 
     override fun close(): Boolean {
-        mCamera.stopPreview()
-        mCamera.release()
+        if(mCamera!=null) {
+            mCamera.stopPreview()
+            mCamera.release()
+        }
         return false
     }
 
