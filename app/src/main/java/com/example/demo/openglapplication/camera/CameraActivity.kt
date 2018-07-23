@@ -66,7 +66,7 @@ class CameraActivity:AppCompatActivity(), View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val name=item?.title.toString()
         if (name.equals("切换摄像头")) {
-            mCameraView.switchCamera()
+            cameraView.switchCamera()
         }
         return super.onOptionsItemSelected(item)
     }
