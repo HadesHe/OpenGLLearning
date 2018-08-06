@@ -27,6 +27,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnCamera -> {
                 startActivity(Intent(this@MainActivity, CameraActivity::class.java))
             }
+            R.id.btnCamera2 ->{
+                startActivity(Intent(this@MainActivity,Camera2Activity::class.java))
+            }
+            R.id.btnCamera3 ->{
+                startActivity(Intent(this@MainActivity,Camera3Activity::class.java))
+            }
             R.id.btnZip ->{
                 startActivity(Intent(this@MainActivity, ZipActivity::class.java))
             }
@@ -42,6 +48,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnVary.setOnClickListener(this)
         btnSGL.setOnClickListener(this)
         btnCamera.setOnClickListener(this)
+        btnCamera2.setOnClickListener(this)
+        btnCamera3.setOnClickListener(this)
         btnZip.setOnClickListener(this)
 
     }
